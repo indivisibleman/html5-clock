@@ -3,3 +3,20 @@ div.container {
 	text-align: center;
 	margin: 0px auto;
 }
+
+.article-container {
+
+}
+
+.canvas-container {
+	position: relative;
+	margin: 0 auto;
+	width: 300px;
+	height: 300px;
+}
+
+.canvas-container > canvas {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}

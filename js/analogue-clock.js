@@ -1,3 +1,6 @@
+var bgcanvas = document.getElementById('clock-bg-canvas');
+var bgctx = bgcanvas.getContext('2d');
+
 var canvas = document.getElementById('clock-canvas');
 var ctx = canvas.getContext('2d');
 
@@ -25,45 +28,85 @@ function drawHand(x, length, width, colour) {
 	ctx.restore();
 }
 
-function drawTickMarks() {
-	let innerSize;
-	let outerSize = 140;
+function drawClockFace() {
+	bgctx.save();
+
+	bgctx.translate(HALF_WIDTH, HALF_HEIGHT);
 	
 	for(let mark = 0; mark < 60; mark++) {
-		let y = TAU * mark / 60;
-		
-		ctx.save();
+		bgctx.save();
 		
 		if(mark % 5 == 0) {
-			ctx.lineWidth = 2;
-			innerSize = 125;
+			bgctx.lineWidth = 4;
 		} else {
-			innerSize = 130;
+			bgctx.lineWidth = 2;
 		}
 		
-		ctx.lineCap = "round";
+		bgctx.lineCap = "butt";
 		
-		ctx.beginPath();
-		ctx.lineTo(HALF_WIDTH + (innerSize * Math.sin(y)), HALF_HEIGHT - (innerSize * Math.cos(y)));
-		ctx.lineTo(HALF_WIDTH + (outerSize * Math.sin(y)), HALF_HEIGHT - (outerSize * Math.cos(y)));
-		ctx.stroke();
+		bgctx.rotate(mark / 60 * TAU);
 		
-		ctx.restore();
+		bgctx.beginPath();
+		bgctx.moveTo(0, 139);
+		bgctx.lineTo(0, 144);
+		bgctx.stroke();
+		
+		bgctx.restore();
 	}
+	
+	bgctx.lineWidth = 2;
+	
+	bgctx.beginPath();
+	bgctx.arc(0, 0, 139, 0, TAU, true);
+	bgctx.stroke();
+	
+	bgctx.beginPath();
+	bgctx.arc(0, 0, 144, 0, TAU, true);
+	bgctx.stroke();
+	
+	bgctx.beginPath();
+	bgctx.arc(0, 0, 148, 0, TAU, true);
+	bgctx.stroke();
+	
+	bgctx.restore();
+	
+	drawHours();
 }
 
 function drawHours() {
-	let z = 105;
+	bgctx.save();
+
+	bgctx.translate(HALF_WIDTH, HALF_HEIGHT);
 	
-	ctx.textAlign = "center";
-	ctx.textBaseline = "middle";
-	ctx.font = 'bold 20px serif';
+	bgctx.textAlign = "center";
+	bgctx.textBaseline = "middle";
+	bgctx.font = '30px serif';
 	
 	for(let hour = 0; hour < 12; hour++) {
-		let y = TAU * hour / 12;
+		bgctx.save();
 		
-		ctx.fillText(NUMERALS[hour], HALF_WIDTH + (z * Math.sin(y)), HALF_HEIGHT - (z * Math.cos(y)));
+		bgctx.rotate(hour / 12 * TAU);
+		bgctx.scale(1, 2);
+		
+		bgctx.fillText(NUMERALS[hour], 0, -55);
+		
+		bgctx.restore();
 	}
+	
+	bgctx.restore();
+}
+
+function drawHourHand(hour) {
+	ctx.save();
+
+	ctx.translate(HALF_WIDTH, HALF_HEIGHT);
+	ctx.rotate(hour / 12 * TAU);
+	
+	ctx.beginPath();
+	
+	ctx.stroke();
+	
+	ctx.restore();
 }
 
 function draw() {
@@ -72,26 +115,18 @@ function draw() {
 	let hour = now.getHours();
 	let minute = now.getMinutes();
 	let second = now.getSeconds();
+	let millisecond = now.getMilliseconds();
 	
 	ctx.clearRect(0, 0, 300, 300);
 	
-	ctx.beginPath();
-	ctx.arc(150, 150, 140, 0, TAU, true);
-	ctx.stroke();
-	
-	ctx.beginPath();
-	ctx.arc(150, 150, 143, 0, TAU, true);
-	ctx.stroke();
-	
-	drawTickMarks();
-	
-	drawHours();
-	
-	drawHand(hour / 12, 60, 5, "#000");
-	drawHand(minute / 60, 110, 2, "#000");
-	drawHand(second / 60, 130, 1, "#f00");
+	drawHourHand(hour + (minute / 60));
+	//drawHand((hour + (minute / 60)) / 12, 60, 5, "#000");
+	drawHand((minute + (second / 60)) / 60, 110, 2, "#000");
+	drawHand((second + (millisecond / 1000)) / 60, 144, 1, "#f00");
 	
 	window.requestAnimationFrame(draw);
 }
+
+drawClockFace();
 
 window.requestAnimationFrame(draw)
