@@ -1,3 +1,12 @@
+@font-face {
+	font-family: 'kingthings_italique';
+	src:	url('../font/kingthings_italique-webfont.ttf') format('truetype'),
+		url('../font/kingthings_italique-webfont.woff2') format('woff2'),
+		url('../font/kingthings_italique-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 div.container {
 	width: 350px;
 	text-align: center;

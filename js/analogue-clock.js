@@ -11,21 +11,18 @@ var HALF_HEIGHT = HEIGHT / 2;
 var HALF_WIDTH = WIDTH / 2;
 var NUMERALS = ['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
 
-function drawHand(x, length, width, colour) {
-	let y = x * TAU;
+function drawClockFaceText() {
+	bgctx.save();
 	
-	ctx.save();
+	bgctx.translate(HALF_WIDTH, HALF_HEIGHT);
 	
-	ctx.lineWidth = width;
-	ctx.lineCap = "round";
-	ctx.strokeStyle = colour;
+	bgctx.textAlign = "center";
+	bgctx.textBaseline = "middle";
+	bgctx.font = '20px kingthings_italique';
 	
-	ctx.beginPath();
-	ctx.moveTo(HALF_WIDTH, HALF_HEIGHT);
-	ctx.lineTo(HALF_WIDTH + (length * Math.sin(y)), HALF_HEIGHT - (length * Math.cos(y)));
-	ctx.stroke();
+	bgctx.fillText("IndivisibleMan", 0, -40);
 	
-	ctx.restore();
+	bgctx.restore();
 }
 
 function drawClockFace() {
@@ -163,7 +160,7 @@ function drawHourHand(hour) {
 	ctx.lineTo(4.396535, 14.94595);
 	ctx.lineTo(3.50105, 18.8286);
 	ctx.lineTo(1.71009, 22.36865);
-	ctx.lineTo(1.71009, 23.51055);
+	ctx.lineTo(1.71009, 23.51055);drawClockFace
 	ctx.lineTo(2.47765, 24.53835);
 	ctx.lineTo(4.14068, 24.19575);
 	ctx.lineTo(5.03615, 22.48275);
@@ -188,7 +185,7 @@ function drawHourHand(hour) {
 	ctx.lineTo(10.40905, 38.69805);
 	ctx.lineTo(7.083, 39.7258);
 	ctx.lineTo(7.46675, 40.98195);
-	ctx.lineTo(7.46675, 43.38005);
+	ctx.lineTo(7.46675, 43.38005);drawClockFaceText
 	ctx.lineTo(5.6758, 44.7504);
 	ctx.lineTo(4.90825, 44.1794);
 	ctx.lineTo(5.54785, 43.4942);
@@ -196,7 +193,7 @@ function drawHourHand(hour) {
 	ctx.lineTo(3.756925, 40.8678);
 	ctx.lineTo(1.83804, 41.6672);
 	ctx.lineTo(1.96597, 43.60845);
-	ctx.lineTo(3.501075, 46.69175);
+	ctx.lineTo(3.501075, 46.69175);drawClockFace
 	ctx.lineTo(3.501075, 50.346);
 	ctx.lineTo(1.83805, 53.5435);
 	ctx.lineTo(1.070495, 72.1575);
@@ -269,7 +266,7 @@ function drawMinuteHand(minute) {
 	ctx.lineTo(-2.2754225, 34.950385);
 	ctx.lineTo(-3.2676085, 36.36654);
 	ctx.lineTo(-5.1196925, 37.600565);
-	ctx.lineTo(-7.3554195, 37.081475);
+	ctx.lineTo(-7.3554195, 37.081475);drawClockFace
 	ctx.lineTo(-8.75771, 35.27259);
 	ctx.lineTo(-8.625435, 33.127395);
 	ctx.lineTo(-8.20209, 32.089735);
@@ -340,5 +337,12 @@ function draw() {
 }
 
 drawClockFace();
+
+WebFont.load({
+	custom: {
+		families: ['kingthings_italique']
+	},
+	active: function() { drawClockFaceText(); }
+});
 
 window.requestAnimationFrame(draw)
