@@ -1,31 +1,25 @@
 @font-face {
-	font-family: 'kingthings_italique';
-	src:	url('../font/kingthings_italique-webfont.ttf') format('truetype'),
-		url('../font/kingthings_italique-webfont.woff2') format('woff2'),
-		url('../font/kingthings_italique-webfont.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'kingthings_italique';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/kingthings_italique-webfont.eot?#iefix') format('embedded-opentype'), url('../font/kingthings_italique-webfont.ttf') format('truetype'), url('../font/kingthings_italique-webfont.woff2') format('woff2'), url('../font/kingthings_italique-webfont.woff') format('woff');
 }
 
-div.container {
-	width: 350px;
-	text-align: center;
-	margin: 0px auto;
-}
-
-.article-container {
-
+.container {
+  margin: 0 auto;
+  text-align: center;
+  width: 350px;
 }
 
 .canvas-container {
-	position: relative;
-	margin: 0 auto;
-	width: 300px;
-	height: 300px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  width: 300px;
 }
 
-.canvas-container > canvas {
-	position: absolute;
-	left: 0px;
-	top: 0px;
+.canvas-container>canvas {
+  left: 0;
+  position: absolute;
+  top: 0;
 }
